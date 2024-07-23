@@ -88,7 +88,7 @@ export class GameComponent {
     this.isRequestExecuting = true; // Set loading state to true
 
     this.apiService.playRound(this.gameRound)
-      .pipe(delay(2000)) // Simulate game round delay
+      .pipe(delay(1000)) // Simulate game round delay
       .subscribe({
 
         next: (gameResult: GameResult) => {

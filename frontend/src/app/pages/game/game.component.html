@@ -11,7 +11,7 @@
       <div class="mb-4 mt-3 text-center">
         <p class="mb-3"><strong>Your Number: {{gameRound.selectedNumber}}</strong></p>
         <p class="mb-3"><strong>Generated Number: {{gameResult.generatedNumber}}</strong></p>
-        <p class="mb-3"><strong>Placed Bet: {{gameRound.placedBet}}</strong></p>
+        <p class="mb-3"><strong>Placed Bet: {{gameRound.placedBet | number:'1.2-2'}}</strong></p>
         <p class="mb-3"><strong>Win Amount: {{gameResult.wonAmount | number:'1.2-2'}}</strong></p>
       </div>
 
