@@ -42,15 +42,6 @@ This project features a full-stack number guessing game with a Java Spring Boot 
   3. If the player's number is greater than the generated number, the win is calculated as: `bet * (99 / selectedNumber)`.
   4. The server returns the generated number, win status, and the amount won.
 
-### Backend
-- **Java 11**: Programming language for backend development.
-- **Spring Boot 2.7.18**: Framework for building RESTful APIs and services.
-- **JUnit 5**: Framework for unit and integration tests.
-- **Mockito**: For mocking and testing dependencies.
-
-### Common
-- **Maven**: Build tool for managing dependencies and building the project.
-
 ## Project Structure
 
 ### Backend
