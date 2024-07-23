@@ -19,6 +19,13 @@ This project features a full-stack number guessing game with a Java Spring Boot 
 - **Bootstrap**: Framework for responsive design and styling.
 - **FontAwesome**: Icon set for visual enhancements.
 
+### Backend
+- **Java 11**: The programming language used for the implementation.
+- **Spring Boot 2.7.18**: Framework for building the RESTful API and application services.
+- **JUnit 5**: Testing framework for unit and integration tests.
+- **Mockito**: Framework for mocking and testing dependencies.
+- **Validation API**: For ensuring data integrity in game inputs.
+
 ## Table of Contents
 
 - [Features](#features)
