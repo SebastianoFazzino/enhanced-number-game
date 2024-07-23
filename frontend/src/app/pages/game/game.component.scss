@@ -1,3 +1,8 @@
+.error-messages-container {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
 
 .container-card {
   width: 100%;
@@ -6,8 +11,14 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-top: 75px;
   padding: 25px;
+}
 
-  @media (min-width: 700px) {
+.container-card p {
+  font-size: 1.3rem;
+}
+
+@media (min-width: 700px) {
+  .container-card {
     width: 600px;
   }
 }
@@ -18,7 +29,7 @@
   50% { color: #D4AF37; }
 }
 
-h1 {
+.main-title {
   animation: colorFade 4s infinite;
 }
 
@@ -28,15 +39,20 @@ h1 {
   50% { background-color: #D4AF37; }
 }
 
-.btn-warning {
-  font-size: 1.25rem; /* Makes the button larger */
-  padding: 1rem 2rem; /* Increases padding for a larger button */
-  border-radius: 30px; /* More rounded corners */
+.play-button {
+  font-size: 1.25rem;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  margin: auto;
   animation: buttonColorFade 4s infinite linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icon {
   color: rgba(75, 0, 130);
+  margin-right: 8px;
 }
 
 input:focus {
@@ -54,30 +70,15 @@ input:focus {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-
-  .form-floating {
-    flex: 1 1 auto;
-    min-width: 250px;
-    margin-right: 10px;
-  }
 }
 
-.submit-container {
-  display: flex;
-  justify-content: space-between; /* Aligns children (input and button) horizontally */
-  align-items: center; /* Aligns children vertically */
+.inputs-container .form-floating {
+  flex: 1 1 auto;
+  min-width: 250px;
+  margin-right: 10px;
 }
 
-.submit-container .form-floating {
-  flex: 2; /* Allows the input to grow, taking more space */
-}
-
-.submit-container button {
-  flex-basis: 150px; /* Initial size of the button */
-  flex-grow: 1; /* Allows the button to grow if there's extra space, but not as much as the input */
-}
-
-// Needed to remove the default spinner in number inputs
+/* Remove default spinner in number inputs */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

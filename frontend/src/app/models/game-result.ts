@@ -1,6 +1,6 @@
 export interface GameResult {
   generatedNumber?: number;
-  isWin?: boolean;
+  win?: boolean;
   wonAmount?: number;
 }
 

@@ -30,6 +30,7 @@ export class GameComponent {
   protected potentialWin: number = 0;
 
   protected isRequestExecuting: boolean = false;
+  protected isRequestExecuted: boolean = false;
   protected errorMessages: string[] = [];
 
   protected faQuestionCircle: IconDefinition = faQuestionCircle;
@@ -43,6 +44,15 @@ export class GameComponent {
 
   clearErrors(): void {
     this.errorMessages = [];
+  }
+
+  playAgain(): void {
+    this.gameRound = {
+      selectedNumber: null,
+      placedBet: null
+    };
+    this.gameResult = {};
+    this.isRequestExecuted = false;
   }
 
   playRound() : void {
@@ -72,6 +82,7 @@ export class GameComponent {
         next: (gameResult: GameResult) => {
           this.gameResult = gameResult;
           this.isRequestExecuting = false;
+          this.isRequestExecuted = true;
         },
 
         error: (err: HttpErrorResponse): void => {
