@@ -1,0 +1,60 @@
+<div class="container-fluid card container-card px-5">
+
+  <h1 class="text-center my-4 fw-bolder">
+    Try your luck!
+  </h1>
+
+  <!-- error messages -->
+  @if (errorMessages.length) {
+    @for ( msg of errorMessages; track msg ) {
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ msg }}</strong>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+      </div>
+    }
+  }
+
+  <div class="mx-5">
+    <!-- form items -->
+    <div class="form-floating my-4 position-relative">
+      <input (ngModelChange)="checkAndCalculatePotentialWin()" [(ngModel)]="gameRound.selectedNumber" class="form-control"
+             id="selected-number"
+             placeholder="1-100" type="number">
+      <label for="selected-number">Select a number <small>&nbsp;(1-100)</small></label>
+      <fa-icon class="icon position-absolute top-50 end-0 translate-middle-y pe-3" [icon]="faQuestionCircle"></fa-icon>
+    </div>
+
+    <div class="form-floating my-4 position-relative">
+      <input (ngModelChange)="checkAndCalculatePotentialWin()" [(ngModel)]="gameRound.placedBet" class="form-control"
+             id="placed-bet"
+             placeholder="" type="text">
+      <label for="placed-bet">Place your bet</label>
+      <fa-icon class="icon position-absolute top-50 end-0 translate-middle-y pe-3" [icon]="faCoins"></fa-icon>
+    </div>
+
+    <!-- submit items -->
+    <div class="form-floating my-4 position-relative">
+      <input [value]="potentialWin" readonly class="form-control"
+             id="potential-win"
+             placeholder="" type="text">
+      <label for="potential-win">Potential win</label>
+      <fa-icon class="icon position-absolute top-50 end-0 translate-middle-y pe-3" [icon]="faSackDollar"></fa-icon>
+    </div>
+
+    <button (click)="playRound()" class="btn btn-warning w-100 my-4"
+            type="button" [disabled]="isRequestExecuting">
+      @if (isRequestExecuting && !errorMessages.length) {
+        <span class="spinner-border" role="status" aria-hidden="true">
+        ...
+        </span>
+      } @else {
+        <span class="fw-bolder">
+          <fa-icon class="icon top-50 end-0 translate-middle-y pe-3" [icon]="faCircleRight" >
+          </fa-icon>Play!
+        </span>
+      }
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,89 @@
+
+.container-card {
+  width: 100%;
+  background-color: rgba(75, 0, 130, 0.4);
+  border-radius: 150px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 75px;
+  padding: 25px;
+
+  @media (min-width: 700px) {
+    width: 600px;
+  }
+}
+
+@keyframes colorFade {
+  0%, 100% { color: #FFD700; }
+  25%, 75% { color: #B8860B; }
+  50% { color: #D4AF37; }
+}
+
+h1 {
+  animation: colorFade 4s infinite;
+}
+
+@keyframes buttonColorFade {
+  0%, 100% { background-color: #FFD700; }
+  25%, 75% { background-color: #B8860B; }
+  50% { background-color: #D4AF37; }
+}
+
+.btn-warning {
+  font-size: 1.25rem; /* Makes the button larger */
+  padding: 1rem 2rem; /* Increases padding for a larger button */
+  border-radius: 30px; /* More rounded corners */
+  animation: buttonColorFade 4s infinite linear;
+}
+
+.icon {
+  color: rgba(75, 0, 130);
+}
+
+input:focus {
+  border-color: rgba(75, 0, 130) !important;
+  box-shadow: 0 0 0 0.25rem rgba(75, 0, 130, 0.25) !important;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+.inputs-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .form-floating {
+    flex: 1 1 auto;
+    min-width: 250px;
+    margin-right: 10px;
+  }
+}
+
+.submit-container {
+  display: flex;
+  justify-content: space-between; /* Aligns children (input and button) horizontally */
+  align-items: center; /* Aligns children vertically */
+}
+
+.submit-container .form-floating {
+  flex: 2; /* Allows the input to grow, taking more space */
+}
+
+.submit-container button {
+  flex-basis: 150px; /* Initial size of the button */
+  flex-grow: 1; /* Allows the button to grow if there's extra space, but not as much as the input */
+}
+
+// Needed to remove the default spinner in number inputs
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
