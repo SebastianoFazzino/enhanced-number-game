@@ -2,19 +2,22 @@ import {Component} from '@angular/core';
 import {GameRound} from "../../models/game-round";
 import {GameResult} from "../../models/game-result";
 import {ApiService} from "../../services/api.service";
-import {delay} from "rxjs";
+import { delay, Subject } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {faCircleRight, faCoins, faQuestionCircle, faSackDollar} from '@fortawesome/free-solid-svg-icons';
 import {IconDefinition} from "@fortawesome/free-regular-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {DecimalPipe} from "@angular/common";
 
 @Component({
   selector: 'app-game',
   standalone: true,
   imports: [
     FormsModule,
-    FaIconComponent
+    FaIconComponent,
+    DecimalPipe
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
@@ -27,7 +30,7 @@ export class GameComponent {
   }
 
   protected gameResult: GameResult = {};
-  protected potentialWin: number = 0;
+  protected potentialWin: number | undefined;
 
   protected isRequestExecuting: boolean = false;
   protected isRequestExecuted: boolean = false;
@@ -38,9 +41,17 @@ export class GameComponent {
   protected faSackDollar: IconDefinition = faSackDollar;
   protected faCircleRight: IconDefinition = faCircleRight;
 
+  private calculateWinSubject = new Subject<void>();
+
   constructor(
     private apiService: ApiService
-  ) {}
+  ) {
+    this.calculateWinSubject.pipe(
+      debounceTime(500) // 500ms delay
+    ).subscribe(() => {
+      this.calculatePotentialWin();
+    });
+  }
 
   clearErrors(): void {
     this.errorMessages = [];
@@ -53,6 +64,7 @@ export class GameComponent {
     };
     this.gameResult = {};
     this.isRequestExecuted = false;
+    this.potentialWin = undefined;
   }
 
   playRound() : void {
@@ -119,14 +131,46 @@ export class GameComponent {
       })
   }
 
+  protected get formattedPotentialWin(): string {
+    if (this.potentialWin) {
+      return this.potentialWin.toFixed(2);
+    }
+    return 'N/A'
+  }
+
   protected checkAndCalculatePotentialWin(): void {
     this.clearErrors();
-    if (this.gameRound.selectedNumber !== null && this.gameRound.placedBet !== null) {
-      this.calculatePotentialWin();
+
+    const isValidSelectedNumber = this.gameRound.selectedNumber !== null
+      && !isNaN(this.gameRound.selectedNumber) && this.gameRound.selectedNumber.toString().trim() !== '';
+    const isValidPlacedBet = this.gameRound.placedBet !== null
+      && !isNaN(this.gameRound.placedBet) && this.gameRound.placedBet.toString().trim() !== '';
+
+    if (isValidSelectedNumber && isValidPlacedBet) {
+      this.calculateWinSubject.next();
     }
   }
 
   calculatePotentialWin(): void {
-    this.potentialWin = 100;
+    this.apiService.calculatePotentialWin(this.gameRound)
+      .subscribe({
+        next: (potentialWinResponse) => {
+          this.potentialWin = potentialWinResponse.potentialWinAmount;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorMessages = [];
+          if (err.error && typeof err.error === 'object') {
+            if (err.error.validationErrors) {
+              this.errorMessages = err.error.validationErrors;
+            } else if (err.error.message) {
+              this.errorMessages.push(err.error.message);
+            } else {
+              this.errorMessages.push("An error occurred. Please try again later.");
+            }
+          } else {
+            this.errorMessages.push("An unexpected error occurred. Please try again later.");
+          }
+        }
+      });
   }
 }

@@ -19,13 +19,18 @@ public class GameService {
 
         boolean isWin = selectedNumber > generatedNumber;
 
-        float wonAmount = isWin ? round.getPlacedBet() * (99f / selectedNumber) : 0;
+        float wonAmount = isWin
+                ? this.calculatePotentialWin(selectedNumber, round.getPlacedBet())
+                : 0;
 
         return new GameResult(generatedNumber, isWin, wonAmount);
+    }
+
+    public float calculatePotentialWin(int selectedNumber, float placedBet) {
+        return placedBet * (99f / selectedNumber);
     }
 
     protected int generateRandomNumber() {
         return new Random().nextInt(MAX_NUMBER - MIN_NUMBER + 1) + MIN_NUMBER;
     }
-
 }
